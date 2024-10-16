@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier;
 
     public bool gameOver;
-    public GameObject button;
+    public GameObject gameoverButton;
+    public TMP_Text scoreText;
 
 
     float delayBetweenPresses = 0.25f;
@@ -33,15 +35,23 @@ public class PlayerController : MonoBehaviour
     private AudioSource _playerAudio;
     private Rigidbody _playerRb;
 
+    private int playerPoints;
+
     // Start is called before the first frame update
     private void Start()
     {
         _playerRb = GetComponent<Rigidbody>();
         _playerAnim = GetComponent<Animator>();
         _playerAudio = GetComponent<AudioSource>();
+
         // _playerRb.AddForce(Vector3.up * 100);
         Physics.gravity *= gravityModifier;
-        button.SetActive(false);
+
+        // Hide the gameover message at the beginning
+        gameoverButton.SetActive(false);
+
+        playerPoints = 0;
+
     }
 
     // Update is called once per frame
@@ -54,14 +64,10 @@ public class PlayerController : MonoBehaviour
             _playerAnim.SetTrigger(JumpTrig);
             dirtParticles.Play();
             _playerAudio.PlayOneShot(jumpSound, 1.0f);
-
-
         }
-
-
-
     }
 
+    // When player touches another object that has a collider
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -77,8 +83,26 @@ public class PlayerController : MonoBehaviour
             _playerAnim.SetInteger(DeathTypeINT, 1);
             dirtParticles.Stop();
             _playerAudio.PlayOneShot(crashSound, 1.0f);
-            button.SetActive(true);
+
+            // Show game over button
+            gameoverButton.SetActive(true);
 
         }
+        else
+        {
+            // TODO: Detect when you collide with `Money`
+            // - Make the `Money` gameObject disappear: Destroy(other.gameobject);
+            // - Change the score UI calling the function `SetPointsUI()`
+
+            Debug.Log("Colliding with " + other.gameObject.tag);
+        }
+    }
+
+    private void SetPointsUI()
+    {
+        playerPoints = playerPoints + 1;
+        Debug.Log("Score" + playerPoints);
+
+        // TODO: Add here a line to show the score to the UI `scoreText.text`
     }
 }

@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Free Pixel Space Platform Pack/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/FinalProject.unity
+    guid: 1022d0cced1d9354ba685c97614da8df
   m_configObjects: {}
