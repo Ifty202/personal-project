@@ -1,1 +1,1 @@
-platform runner to get points 
+platform runner to get points but Game title is Desert runner
